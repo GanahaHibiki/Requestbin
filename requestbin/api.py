@@ -12,6 +12,7 @@ def _response(object, code=200):
     else:
         resp = make_response(json.dumps(object), code)
         resp.headers['Content-Type'] = 'application/json'
+        resp.headers['x-csrf-token'] = 'mocktoken'
         resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
 
