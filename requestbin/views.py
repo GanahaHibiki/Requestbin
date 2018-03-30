@@ -46,6 +46,7 @@ def bin(name):
             base_url=request.scheme+'://'+request.host)
     else:
         db.create_request(bin, request)
+        resp.headers['x-csrf-token'] = 'mocktoken'
         resp = make_response("ok\n")
         resp.headers['Sponsored-By'] = "https://www.runscope.com"
         return resp
