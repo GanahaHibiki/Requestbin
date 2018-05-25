@@ -20,7 +20,7 @@ def expand_recent_bins():
     recent = []
     # all_keys = db.get_all_keys()
     for name in session['recent']:
-    for name in all_keys:
+    # for name in all_keys:
         try:
             recent.append(db.lookup_bin(name))
         except KeyError:
