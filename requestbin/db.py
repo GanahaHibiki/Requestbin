@@ -33,3 +33,9 @@ def count_requests():
 
 def avg_req_size():
     return db.avg_req_size()
+
+def get_all_keys():
+    try: 
+        return db.get_all_keys()
+    except TypeError:
+            raise KeyError("db.py get_all keys error")
