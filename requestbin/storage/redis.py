@@ -58,3 +58,7 @@ class RedisStorage():
         except TypeError:
             self.redis.delete(key) # clear bad data
             raise KeyError("Bin not found")
+
+    def get_all_keys(self):
+        keys = self.redis.keys("{}_*".format(self.prefix))
+        return keys

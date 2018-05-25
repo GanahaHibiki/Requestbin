@@ -33,3 +33,6 @@ def count_requests():
 
 def avg_req_size():
     return db.avg_req_size()
+
+def get_all_keys():
+    return db.get_all_keys()
