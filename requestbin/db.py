@@ -26,6 +26,10 @@ def lookup_bin(name):
     print "[db.py] I got a name: " + name
     # name = name.split("requestbin_")[1]
     # print "splitted: " + name
+    if name.split("requestbin_")[0] == "":
+        name = "requestbin_" + name
+        print name
+
     try:
         return db.lookup_bin(name)
     except Exception:

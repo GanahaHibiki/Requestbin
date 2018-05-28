@@ -51,7 +51,7 @@ class RedisStorage():
 
     def lookup_bin(self, name):
         print "---------------OK, I'm here in redis.lookup_bin----------------"
-        name = name.split("requestbin_")[1]
+        name = name.split("requestbin_")[len(name.split("requestbin_")) - 1]
         print "[redis.py] name is " + name
         key = self._key(name)
         print "[redis.py] key is " + key
