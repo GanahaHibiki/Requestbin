@@ -23,7 +23,13 @@ def create_request(bin, request):
 
 def lookup_bin(name):
     name=re.split(r"[/.]", name)[0]
-    return db.lookup_bin(name)
+    print "[db.py] I got a name: " + name
+    # name = name.split("requestbin_")[1]
+    # print "splitted: " + name
+    try:
+        return db.lookup_bin(name)
+    except Exception:
+        print "[db.py] db.lookup_bin(" + name + ") failed"
 
 def count_bins():
     return db.count_bins()
@@ -38,4 +44,5 @@ def get_all_keys():
     try: 
         return db.get_all_keys()
     except TypeError:
-            raise KeyError("db.py get_all keys error")
+        print "[db.py] redis.py get_all keys error"
+        raise KeyError("db.py get_all keys error")

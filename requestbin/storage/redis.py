@@ -50,18 +50,35 @@ class RedisStorage():
         return info['used_memory'] / info['db0']['keys'] / 1024
 
     def lookup_bin(self, name):
+        print "---------------OK, I'm here in redis.lookup_bin----------------"
+        name = name.split("requestbin_")[1]
+        print "[redis.py] name is " + name
         key = self._key(name)
-        serialized_bin = self.redis.get(key)
+        print "[redis.py] key is " + key
+        try:
+            serialized_bin = self.redis.get(key)
+            print "[redis.py] (get with key) serialized_bin is: " + str(serialized_bin)
+            serialized_bin1 = self.redis.get(name)
+            print "[redis.py] (get with key) serialized_bin is: " + str(serialized_bin1)
+        except Exception:
+            print "[redis.py] serialize bin with 'self.redis.get(" + key + ")'failed"
+            
         try:
             bin = Bin.load(serialized_bin)
+            print "[redis.py] bin '" + str(bin) + "' loaded, and will be returned successfully"
             return bin
         except TypeError:
             self.redis.delete(key) # clear bad data
+            print "[redis.py] TypeError"
+            print "[redis.py] error in redis.lookup_bin with key '" + str(serialized_bin) + "'"
             raise KeyError("Bin not found")
+        else: 
+            print "[redis.py] in redis.lookup_bin(), but not an type error while running Bin.load(suppose i printed it)"
 
     def get_all_keys(self):
         try: 
             keys = self.redis.keys("{}_*".format(self.prefix))
             return keys
         except TypeError:
+            print "redis.py get_all keys error"
             raise KeyError("redis.py get_all keys error")

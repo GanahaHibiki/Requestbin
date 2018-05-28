@@ -18,18 +18,35 @@ def expand_recent_bins():
     if 'recent' not in session:
         session['recent'] = []
     recent = []
-    # all_keys = db.get_all_keys()
-    for name in session['recent']:
-    # for name in all_keys:
+    try:
+        all_keys = db.get_all_keys()
+        print "db.get_all_keys() is working! :)"
+        print str(all_keys)
+    except Exception:
+        print "stops at db.get_all_keys() in expand_recent_bins()"
+    else:
+        print "What??? I'm in else block???"
+    
+    # for name in session['recent']:
+    print "looping 'all_keys'..."
+    for name in all_keys:
+        print "................................................................."
         try:
-            recent.append(db.lookup_bin(name))
+            gotBin = db.lookup_bin(name)
+            print "[view.py] gotBin: " + str(gotBin)
+            recent.append(gotBin)
+            print "[view.py] recent:" + str(recent)
         except KeyError:
+            print "[view.py] Oh no, it's a key error in db.lookup_bin(name)"
             session['recent'].remove(name)
             session.modified = True
+    
+    print "[view.py] recent will be returned as:" + str(recent);
     return recent
 
 @app.endpoint('views.home')
 def home():
+    print "[view.py] visiting home"
     return render_template('home.html', recent=expand_recent_bins())
 
 
